@@ -1,0 +1,26 @@
+name: DevBox CI
+
+on:
+  push:
+    branches:
+      - main  # Define a branch que ativa o workflow (neste caso, "main")
+  pull_request:
+    branches:
+      - main  # Opcional: Executa o workflow em PRs na branch main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Escolhe a imagem do ambiente (Ubuntu é compatível com DevBox)
+
+    steps:
+      # Etapa 1: Fazer checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Etapa 2: Instalar o DevBox
+      - name: Install DevBox
+        run: curl -fsSL https://get.jetpack.io/devbox | bash
+
+      # Etapa 3: Configurar e entrar no ambiente DevBox
+      - name: Setup DevBox environment
+        run: devbox shell -- ./run-your-tests.sh  # Substitua pelo seu script de teste
